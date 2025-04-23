@@ -11,7 +11,7 @@ export class SourceAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        if(response.data.status !== 'ok'){
+        if (response.data.status !== 'ok') {
             console.error(`${response.status} ${response.code} ${response.message}`);
             return [];
         }
@@ -20,5 +20,4 @@ export class SourceAssembler {
             return this.toEntityFromResource(source);
         });
     }
-
 }
