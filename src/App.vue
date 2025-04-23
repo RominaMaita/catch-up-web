@@ -4,32 +4,35 @@ import {ArticleAssembler} from "./news/services/article.assembler.js";
 import {SourceAssembler} from "./news/services/source.assembler.js";
 import SourceList from "./news/components/source-list.component.vue";
 import LanguageSwitcher from "./public/components/language-switcher.component.vue";
+import ArticleList from "./news/components/article-list.component.vue";
 import UnavailableContent from "./news/components/unavailable-content.component.vue";
+import FooterContent from "./public/components/footer-content.component.vue";
 
 export default {
   name: 'App',
-  components: {UnavailableContent, LanguageSwitcher, SourceList},
-  data(){
-    return{
-      drawerVisible:false,
+  components: {FooterContent, UnavailableContent, ArticleList, LanguageSwitcher, SourceList},
+  data() {
+    return {
+      drawerVisible: false,
       articles: [],
       sources: [],
       errors: [],
       newsApi: new NewsApiService(),
     }
   },
-  methods:{
-    getArticlesForSourceWithLogo(source){
-      this.newsApi.getArticlesFromSourceId(source.id)
+  methods: {
+    getArticlesForSourceWithLogo(source) {
+      this.newsApi.getArticlesForSourceId(source.id)
           .then((response) => {
             this.articles = ArticleAssembler.toEntitiesFromResponse(response);
+            console.log(this.articles);
           })
           .catch((error) => {
             this.errors.push(error);
             this.articles = [];
           })
     },
-    getSources(){
+    getSources() {
       this.newsApi.getSources()
           .then((response) => {
             console.log(response);
@@ -41,28 +44,28 @@ export default {
             this.sources = [];
           });
     },
-    toggleSidebar(){
+    toggleSidebar() {
       this.drawerVisible = !this.drawerVisible;
     },
     setSource(source) {
       this.getArticlesForSourceWithLogo(source);
       this.toggleSidebar();
-      }
-    },
-    created(){
-      this.getSources();
     }
+  },
+  created() {
+    this.getSources();
   }
-
+}
 </script>
 <template>
   <div>
     <div>
       <pv-menubar>
-        <template #start></template
-        <pv-button icon="pi pi-bars" label="CatchUp" text @click="toggleSidebar"/>
-        <source-list v-model:visible="drawerVisible" vmodel:sources="sources"
-                     v-on:source-selected="setSource"/>
+        <template #start>
+          <pv-button icon="pi pi-bars" label="CatchUp" text @click="toggleSidebar"/>
+          <source-list v-model:visible="drawerVisible" v-model:sources="sources"
+                       v-on:source-selected="setSource"/>
+        </template>
         <template #end>
           <language-switcher/>
         </template>
@@ -71,6 +74,7 @@ export default {
   </div>
   <div>
     <article-list v-if="errors" :articles="articles"/>
-    <unavailable-content v-else :errors="errors" />
+    <unavailable-content v-else :errors="errors"/>
   </div>
+  <footer-content/>
 </template>
