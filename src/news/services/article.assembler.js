@@ -18,14 +18,15 @@ export class ArticleAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        if (response.data.status !== 'ok'){
-            console.error(`${response.status}, ${response.code}, ${response.message}`);
+        if (response.data.status !== 'ok') {
+            console.error(`${response.status}, ${response.code}, ${response.message }`);
             return [];
         }
-        const articleResponse = response.data;
-        return articleResponse['articles'].map((article) => {
+        const articlesResponse = response.data;
+        return articlesResponse['articles'].map((article) => {
             return this.toEntityFromResource(article);
         });
     }
+
 
 }

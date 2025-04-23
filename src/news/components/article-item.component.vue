@@ -40,7 +40,7 @@ export default {
     </template>
     <template #subtitle>
       <p class="flex align-content-start flex-wrap">
-        <span class="flex align-items-center justify-content-center">
+        <span class="flex align-items-center justify-content-center mr-2">
           <pv-avatar :aria-label="article.source.name"
                      :image="article.source.urlToLogo"
                      shape="circle"/>
@@ -51,7 +51,7 @@ export default {
       </p>
       <p class="flex align-content-start flex-wrap">
         <span class="text-sm">
-          {{ article.getFormattedPublishedAt() }}
+          {{ article.getFormatedPublishedAt() }}
         </span>
       </p>
     </template>
@@ -64,12 +64,12 @@ export default {
       <div class="flex justify-content-center -webkit-box-sizing: border-box; justify-content: space-between;">
         <a :href="article.url" target="_blank">{{ $t('read-more')}}</a>
         <span class="p-spacer"></span>
-        <pv-select-button  :label="$t('article.share')"
-                           icon="pi pi-share-alt"
-                           class="p-button-text p-button-sm"
-                           @click="shareArticle"
-                           aria-label="Share article"
-                           pv-tooltip="$t('article.copy-to-clipboard')"/>
+        <pv-button  :label="$t('article.share')"
+                    icon="pi pi-share-alt"
+                    class="p-button-text p-button-sm"
+                    @click="shareArticle"
+                    aria-label="Share article"
+                    pv-tooltip="$t('article.copy-to-clipboard')"/>
       </div>
     </template>
   </pv-card>
