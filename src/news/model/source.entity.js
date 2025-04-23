@@ -15,6 +15,7 @@ export class Source {
         this.category = category;
         this.language = language;
         this.country = country;
+        this.urlToLogo = "";
     }
 
 }
